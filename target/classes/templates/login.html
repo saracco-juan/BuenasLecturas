@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" th:href="@{/css/register.css}">
+    <link rel="icon" type="image/x-icon" th:href="@{/imgs/books-icon.png}">
+<body>
+<div>
+    <h1>Bienvenido a Buenas lecturas</h1>
+</div>
+
+<form th:action="@{/login}" method="POST">
+
+    <span>Iniciar Sesión</span>
+
+    <div class="container">
+        <label for="email">Email:</label>
+        <input id="email" type="text" name="email" placeholder="Ingrese su email">
+    </div>
+
+    <div class="container">
+        <label for="password">Contraseña:</label>
+        <input id="password" type="text" name="password" placeholder="Ingrese su contrsaeña">
+        <p class="error" th:if="${error}" th:text="${error}"></p>
+    </div>
+
+    <div class="container">
+        <button type="submit">Iniciar Sesión</button>
+        <p class="disclaimer">No tenes una cuenta? Registrate <a th:href="@{/register}">aquí</a></p>
+    </div>
+
+</form>
+
+<footer class="footer">
+    <p>&copy; 2025 Buenas Lecturas - Juan Saracco</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <link rel="stylesheet" th:href="@{/css/register.css}">
+    <link rel="icon" type="image/x-icon" th:href="@{/imgs/books-icon.png}">
+</head>
+<body>
+
+<div>
+    <h1>Bienvenido a Buenas lecturas</h1>
+</div>
+
+<form th:action="@{/register}" th:object="${reader}" method="POST">
+
+    <span>Registrarse</span>
+
+    <input type="hidden" th:field="*{id}">
+
+    <div class="container">
+        <label for="name">Nombre:</label>
+        <input id="name" type="text" th:field="*{name}" placeholder="Ingrese su nombre">
+        <p class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+    </div>
+
+    <div class="container">
+        <label for="email">Email:</label>
+        <input id="email" type="text" th:field="*{email}" placeholder="Ingrese su email">
+        <p class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+    </div>
+
+    <div class="container">
+        <label for="password">Password:</label>
+        <input id="password" type="password" th:field="*{password}" placeholder="Ingrese su contraseña">
+        <p class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+    </div>
+
+    <div class="container">
+        <button type="submit">Registrarse</button>
+        <p class="disclaimer">Ya tenes una cuenta? Inicia sesion <a th:href="@{/login}">aquí</a></p>
+    </div>
+
+</form>
+
+<footer class="footer">
+    <p>&copy; 2025 Buenas Lecturas - Juan Saracco</p>
+</footer>
+
+</body>
+</html>

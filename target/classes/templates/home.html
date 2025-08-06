@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Inicio</title>
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+    <link rel="icon" type="image/x-icon" th:href="@{/imgs/books-icon.png}">
+</head>
+<body>
+
+
+<section>
+
+    <div class="container">
+        <div class="hero" th:object="${reader}">
+            <h1 th:text="'Bienvenido ' + *{name}">Bienvenido, usuario</h1>
+            <p class="quote">Cada libro es una nueva aventura. Empezá la tuya.</p>
+        </div>
+        <div class="container">
+            <div th:if="${param.added}">
+                <p class="alert success">Libro agregado a la lista de Quiero leer</p>
+            </div>
+            <div th:if="${param.duplicate}">
+                <p class="alert warning">Ese libro ya está la lista de Quiero leer</p>
+            </div>
+            <div th:if="${param.error}">
+                <p class="alert error">No se pudo agregar el libro a la lista de Quiero leer</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-container">
+
+        <div class="container">
+            <form class="search-form" th:action="@{/api/search}" th:object="${book}" method="get">
+                <input class="-search-input" type="text" name="title" placeholder="Buscar título o autor..." required>
+                <button class="btn search-btn" type="submit">Buscar</button>
+            </form>
+        </div>
+
+
+        <div class="container results-container">
+            <div class="results">
+                <div th:each="book : ${books}" class="book-card">
+                    <p><strong th:text="${book.title}">Título</strong> - <span th:text="${book.authorName}">Autor</span>
+                    </p>
+                    <form th:action="@{/reading-list/add}" method="post">
+                        <input type="hidden" name="title" th:value="${book.title}"/>
+                        <input type="hidden" name="authorName" th:value="${book.authorName}"/>
+                        <input type="hidden" name="firstPublishYear" th:value="${book.firstPublishYear}"/>
+                        <input type="hidden" name="openLibraryId" th:value="${book.openLibraryId}"/>
+                        <input type="hidden" name="listType" value="QUIERO_LEER"/>
+                        <button class="btn" type="submit">Añadir a Quiero Leer</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="profile-actions">
+                <a class="btn link" th:href="@{/profile}">Ver mi perfil</a>
+                <a class="btn link" th:href="@{/logout}">Cerrar sesión</a>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<footer class="footer">
+    <p>&copy; 2025 Buenas Lecturas - Juan Saracco</p>
+</footer>
+
+</body>
+</html>
