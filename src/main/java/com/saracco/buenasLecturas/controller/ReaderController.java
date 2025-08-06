@@ -60,7 +60,7 @@ public class ReaderController {
         Reader loggedReader = readerService.login(reader.getEmail(), reader.getPassword());
 
         if (loggedReader != null) {
-            session.setAttribute("reader", loggedReader); // 👈 solo si pasa el login
+            session.setAttribute("reader", loggedReader);
             return "redirect:/home";
         } else {
             model.addAttribute("error", "Email o contraseña incorrectos");
@@ -76,6 +76,11 @@ public class ReaderController {
 
     @GetMapping("/home")
     public String showHomePage(HttpSession session, Model model) {
+
+        if (session.getAttribute("reader") == null) {
+            return "redirect:/login";
+        }
+
         Reader loggedReader = (Reader) session.getAttribute("reader");
         model.addAttribute("reader", loggedReader);
         model.addAttribute("book", new Book());
@@ -91,6 +96,10 @@ public class ReaderController {
 
     @GetMapping("/profile")
     public String mostrarPerfil(HttpSession session, Model model) {
+
+        if (session.getAttribute("reader") == null) {
+            return "redirect:/login";
+        }
 
         Reader reader = (Reader) session.getAttribute("reader");
 

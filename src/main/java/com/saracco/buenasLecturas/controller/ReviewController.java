@@ -44,7 +44,13 @@ public class ReviewController {
     }
 
     @GetMapping("/add")
-    public String mostrarFormularioReseña(@RequestParam Long bookId, Model model) {
+    public String mostrarFormularioReseña(@RequestParam Long bookId, Model model, HttpSession session) {
+
+        if (session.getAttribute("reader") == null) {
+            return "redirect:/login";
+        }
+
+
         Optional<Book> optionalBook = bookRepository.findById(bookId);
         if (optionalBook.isEmpty()) {
             return "redirect:/profile?error";

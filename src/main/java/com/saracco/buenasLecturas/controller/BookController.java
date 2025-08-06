@@ -25,6 +25,11 @@ public class BookController {
 
     @GetMapping("/search")
     public String getBooks(@RequestParam("title") String title, Model model, HttpSession session) {
+
+        if (session.getAttribute("reader") == null) {
+            return "redirect:/login";
+        }
+
         List<Book> books = bookService.getBookByTitle(title);
         session.setAttribute("books", books);
 

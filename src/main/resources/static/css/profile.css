@@ -2,18 +2,23 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    font-family: 'Segoe UI', sans-serif;
+
 }
 
 body {
-    font-family: 'Segoe UI', sans-serif;
     background-color: #ffcc99;
-    padding: 2rem;
-    color: #333;
 }
 
 .hero {
     text-align: center;
-    margin-bottom: 2rem;
+    max-width: 800px;
+    margin: 2rem auto;
+}
+
+.container {
+    width: 800px;
+    margin: 1rem auto;
 }
 
 .content-box {
@@ -67,10 +72,6 @@ li {
     font-size: 0.85rem;
 }
 
-.btn.danger {
-    background-color: #f8d7da;
-    border-color: #721c24;
-}
 
 .btn.danger:hover {
     background-color: #e99a9a;
@@ -78,4 +79,56 @@ li {
 
 .inline-form {
     display: inline;
+}
+
+.card {
+    background-color: white;
+    padding: 20px;
+    margin: 30px auto;
+    border-radius: 15px;
+    max-width: 800px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border: 1px solid black;
+    min-height: 75vh;
+}
+
+.logout-container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    width: 100%;
+
+}
+
+.btn.danger {
+    background-color: #f77;
+    color: black;
+}
+
+.footer {
+    width: 100%;
+    background-color: white;
+    color: black;
+    text-align: center;
+    font-size: 1.2rem;
+    padding: 1.5rem 0;
+    font-weight: 600;
+    border: 1px solid black;
+}
+
+.alert {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.danger {
+    background-color: #f8d7da;
+    color: #721c24;
 }
