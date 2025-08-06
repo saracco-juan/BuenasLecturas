@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mi Perfil</title>
+    <link rel="stylesheet" th:href="@{/css/profile.css}">
+</head>
+<body>
+
+<div class="hero">
+    <h1>Mi Perfil</h1>
+</div>
+
+<section class="content-box">
+    <h2>Lista de Quiero Leer</h2>
+    <ul th:if="${#lists.isEmpty(quiero_leer)}">
+        <li class="empty-msg">No hay libros en tu lista de "Quiero Leer".</li>
+    </ul>
+    <ul th:each="item : ${quiero_leer}">
+        <li>
+            <span th:text="${item.book.title} + ' - ' + ${item.book.authorName}"></span>
+            <form th:action="@{/reading-list/move-to-read}" method="post" class="inline-form">
+                <input type="hidden" name="bookId" th:value="${item.book.id}"/>
+                <button type="submit" class="btn small">Marcar como leído</button>
+            </form>
+        </li>
+    </ul>
+</section>
+
+<section class="content-box">
+    <h2>Lista de Leídos</h2>
+    <ul th:if="${#lists.isEmpty(leidos)}">
+        <li class="empty-msg">No hay libros marcados como leídos aún.</li>
+    </ul>
+    <ul th:each="item : ${leidos}">
+        <li>
+            <span th:text="${item.book.title} + ' - ' + ${item.book.authorName}"></span>
+            <div class="actions">
+                <a th:if="${!reviewsMap[item.book.id]}"
+                   th:href="@{'/reviews/add?bookId=' + ${item.book.id}}"
+                   class="btn small">Agregar reseña</a>
+
+                <a th:if="${reviewsMap[item.book.id]}"
+                   th:href="@{'/reviews/edit?bookId=' + ${item.book.id}}"
+                   class="btn small">Editar reseña</a>
+
+                <form th:action="@{/reading-list/delete-from-read}" method="post" class="inline-form">
+                    <input type="hidden" name="bookId" th:value="${item.book.id}" />
+                    <button type="submit" class="btn small danger">Eliminar de leídos</button>
+                </form>
+            </div>
+        </li>
+    </ul>
+</section>
+
+</body>
+</html>
