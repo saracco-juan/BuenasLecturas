@@ -35,6 +35,11 @@ public class ReadingListController {
                                    @RequestParam String listType,
                                    HttpSession session) {
 
+        if (session.getAttribute("reader") == null) {
+            return "redirect:/login";
+        }
+
+
         Reader reader = (Reader) session.getAttribute("reader");
 
         if (reader == null) {

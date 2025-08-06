@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Mi Perfil</title>
     <link rel="stylesheet" th:href="@{/css/profile.css}">
+    <link rel="icon" type="image/x-icon" th:href="@{/imgs/books-icon.png}">
 </head>
 <body>
 
@@ -11,47 +12,81 @@
     <h1>Mi Perfil</h1>
 </div>
 
-<section class="content-box">
-    <h2>Lista de Quiero Leer</h2>
-    <ul th:if="${#lists.isEmpty(quiero_leer)}">
-        <li class="empty-msg">No hay libros en tu lista de "Quiero Leer".</li>
-    </ul>
-    <ul th:each="item : ${quiero_leer}">
-        <li>
-            <span th:text="${item.book.title} + ' - ' + ${item.book.authorName}"></span>
-            <form th:action="@{/reading-list/move-to-read}" method="post" class="inline-form">
-                <input type="hidden" name="bookId" th:value="${item.book.id}"/>
-                <button type="submit" class="btn small">Marcar como leído</button>
-            </form>
-        </li>
-    </ul>
-</section>
+<div class="container">
+    <div th:if="${param.added}" class="alert success">
+        Libro añadido correctamente.
+    </div>
+    <div th:if="${param.deleted}" class="alert danger">
+        Libro eliminado correctamente.
+    </div>
+    <div th:if="${param.updated}" class="alert success">
+        Libro marcado como leído.
+    </div>
+    <div th:if="${param.error}" class="alert danger">
+        Ocurrió un error. Intentalo de nuevo.
+    </div>
+</div>
 
-<section class="content-box">
-    <h2>Lista de Leídos</h2>
-    <ul th:if="${#lists.isEmpty(leidos)}">
-        <li class="empty-msg">No hay libros marcados como leídos aún.</li>
-    </ul>
-    <ul th:each="item : ${leidos}">
-        <li>
-            <span th:text="${item.book.title} + ' - ' + ${item.book.authorName}"></span>
-            <div class="actions">
-                <a th:if="${!reviewsMap[item.book.id]}"
-                   th:href="@{'/reviews/add?bookId=' + ${item.book.id}}"
-                   class="btn small">Agregar reseña</a>
 
-                <a th:if="${reviewsMap[item.book.id]}"
-                   th:href="@{'/reviews/edit?bookId=' + ${item.book.id}}"
-                   class="btn small">Editar reseña</a>
+<section class="card">
 
-                <form th:action="@{/reading-list/delete-from-read}" method="post" class="inline-form">
-                    <input type="hidden" name="bookId" th:value="${item.book.id}" />
-                    <button type="submit" class="btn small danger">Eliminar de leídos</button>
+
+    <div class="content-box">
+        <h2>Lista de Quiero Leer</h2>
+        <ul th:if="${#lists.isEmpty(quiero_leer)}">
+            <li class="empty-msg">No hay libros en tu lista de "Quiero Leer".</li>
+        </ul>
+        <ul th:each="item : ${quiero_leer}">
+            <li>
+                <span th:text="${item.book.title} + ' - ' + ${item.book.authorName}"></span>
+                <form th:action="@{/reading-list/move-to-read}" method="post" class="inline-form">
+                    <input type="hidden" name="bookId" th:value="${item.book.id}"/>
+                    <button type="submit" class="btn small">Marcar como leído</button>
                 </form>
-            </div>
-        </li>
-    </ul>
+            </li>
+        </ul>
+    </div>
+
+    <div class="content-box">
+        <h2>Lista de Leídos</h2>
+        <ul th:if="${#lists.isEmpty(leidos)}">
+            <li class="empty-msg">No hay libros marcados como leídos aún.</li>
+        </ul>
+        <ul th:each="item : ${leidos}">
+            <li>
+                <span th:text="${item.book.title} + ' - ' + ${item.book.authorName}"></span>
+                <div class="actions">
+                    <a th:if="${!reviewsMap[item.book.id]}"
+                       th:href="@{'/reviews/add?bookId=' + ${item.book.id}}"
+                       class="btn small">Agregar reseña</a>
+
+                    <a th:if="${reviewsMap[item.book.id]}"
+                       th:href="@{'/reviews/edit?bookId=' + ${item.book.id}}"
+                       class="btn small">Editar reseña</a>
+
+                    <form th:action="@{/reading-list/delete-from-read}" method="post" class="inline-form">
+                        <input type="hidden" name="bookId" th:value="${item.book.id}" />
+                        <button type="submit" class="btn danger">Eliminar de leídos</button>
+                    </form>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="logout-container">
+        <a class="btn small" th:href="@{/home}">Inicio</a>
+        <form th:action="@{/logout}" method="post" class="inline-form">
+            <button type="submit" class="btn">Cerrar sesión</button>
+        </form>
+
+    </div>
+
 </section>
+
+
+<footer class="footer">
+    <p>&copy; 2025 Buenas Lecturas - Juan Saracco</p>
+</footer>
 
 </body>
 </html>
