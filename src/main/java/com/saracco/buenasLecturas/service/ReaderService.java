@@ -18,6 +18,10 @@ public class ReaderService {
     private ReaderRepository readerRepository;
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
+    public ReaderService(ReaderRepository readerRepository) {
+        this.readerRepository = readerRepository;
+    }
+
     public void register(Reader reader) {
         if (readerRepository.findByEmail(reader.getEmail()) != null) {
             throw new RuntimeException("El email ya está registrado");
