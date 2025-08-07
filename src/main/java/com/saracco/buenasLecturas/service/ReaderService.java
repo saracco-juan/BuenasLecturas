@@ -18,7 +18,6 @@ public class ReaderService {
     private ReaderRepository readerRepository;
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-
     public void register(Reader reader) {
         if (readerRepository.findByEmail(reader.getEmail()) != null) {
             throw new RuntimeException("El email ya está registrado");
@@ -33,11 +32,10 @@ public class ReaderService {
         Reader reader = readerRepository.findByEmail(email);
 
         if (reader != null && passwordEncoder.matches(rawPassword, reader.getPassword())) {
-
-            return reader; // login exitoso
+            return reader;
         }
 
-        return null; // login fallido
+        return null;
     }
 
 

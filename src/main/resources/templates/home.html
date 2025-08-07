@@ -8,28 +8,27 @@
 </head>
 <body>
 
-
 <section>
 
-    <div class="container">
-        <div class="hero" th:if="${reader}">
-            <h1 th:text="'Bienvenido ' + *{reader.name}">Bienvenido, usuario</h1>
-            <p class="quote">Cada libro es una nueva aventura. Empezá la tuya.</p>
-        </div>
-        <div class="container">
-            <div th:if="${param.added}">
-                <p class="alert success">Libro agregado a la lista de Quiero leer</p>
-            </div>
-            <div th:if="${param.duplicate}">
-                <p class="alert warning">Ese libro ya está la lista de Quiero leer</p>
-            </div>
-            <div th:if="${param.error}">
-                <p class="alert error">No se pudo agregar el libro a la lista de Quiero leer</p>
-            </div>
-        </div>
-    </div>
-
     <div class="content-container">
+
+        <div class="container">
+            <div class="hero" th:if="${reader}">
+                <h1 th:text="'Bienvenido ' + *{reader.name}">Bienvenido, usuario</h1>
+                <p class="quote">Cada libro es una nueva aventura. Empezá la tuya.</p>
+            </div>
+            <div class="container">
+                <div th:if="${param.added}">
+                    <p class="alert success">Libro agregado a la lista de Quiero leer</p>
+                </div>
+                <div th:if="${param.duplicate}">
+                    <p class="alert warning">Ese libro ya está la lista de Quiero leer</p>
+                </div>
+                <div th:if="${param.error}">
+                    <p class="alert error">No se pudo agregar el libro a la lista de Quiero leer</p>
+                </div>
+            </div>
+        </div>
 
         <div class="container">
             <form class="search-form" th:action="@{/api/search}" th:object="${book}" method="get">
@@ -38,35 +37,56 @@
             </form>
         </div>
 
-
         <div class="container results-container">
             <div class="results">
-                <div th:each="book : ${books}" class="book-card">
-                    <p><strong th:text="${book.title}">Título</strong> - <span th:text="${book.authorName}">Autor</span>
+                <div th:each="book : ${books}" class="book-card"
+                     th:attr="data-title=${book.title},
+                  data-author=${book.authorName},
+                  data-year=${book.firstPublishYear},
+                  data-id=${book.openLibraryId}"
+                     onclick="selectBook(this)">
+                    <p>
+                        <strong th:text="${book.title}">Título</strong> -
+                        <span th:text="${book.authorName}">Autor</span>
                     </p>
-                    <form th:action="@{/reading-list/add}" method="post">
-                        <input type="hidden" name="title" th:value="${book.title}"/>
-                        <input type="hidden" name="authorName" th:value="${book.authorName}"/>
-                        <input type="hidden" name="firstPublishYear" th:value="${book.firstPublishYear}"/>
-                        <input type="hidden" name="openLibraryId" th:value="${book.openLibraryId}"/>
-                        <input type="hidden" name="listType" value="QUIERO_LEER"/>
-                        <button class="btn" type="submit">Añadir a Quiero Leer</button>
-                    </form>
                 </div>
             </div>
-
             <div class="profile-actions">
+
+                <form th:action="@{/reading-list/add}" method="post" id="addForm">
+                    <input type="hidden" name="title" id="titleInput"/>
+                    <input type="hidden" name="authorName" id="authorInput"/>
+                    <input type="hidden" name="firstPublishYear" id="yearInput"/>
+                    <input type="hidden" name="openLibraryId" id="idInput"/>
+                    <input type="hidden" name="listType" value="QUIERO_LEER"/>
+                    <button class="btn" type="submit" id="addButton" disabled>Agregar a Quiero Leer</button>
+                </form>
                 <a class="btn link" th:href="@{/profile}">Ver mi perfil</a>
                 <a class="btn link" th:href="@{/logout}">Cerrar sesión</a>
             </div>
         </div>
-    </div>
 
+
+    </div>
 </section>
 
 <footer class="footer">
     <p>&copy; 2025 Buenas Lecturas - Juan Saracco</p>
 </footer>
 
+<script>
+    function selectBook(card) {
+        document.querySelectorAll('.book-card').forEach(c => c.classList.remove('selected'));
+
+        card.classList.add('selected');
+
+        document.getElementById('titleInput').value = card.dataset.title;
+        document.getElementById('authorInput').value = card.dataset.author;
+        document.getElementById('yearInput').value = card.dataset.year;
+        document.getElementById('idInput').value = card.dataset.id;
+
+        document.getElementById('addButton').disabled = false;
+    }
+</script>
 </body>
 </html>

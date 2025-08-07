@@ -11,7 +11,6 @@ import java.util.List;
 @Component
 public class BookService {
 
-
     @Autowired
     private BookApiClient bookApiClient;
     @Autowired

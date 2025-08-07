@@ -39,7 +39,7 @@ public class ReaderController {
     @PostMapping("/register")
     public String registerReader(@Valid @ModelAttribute("reader") Reader reader, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            return "register"; // Vuelve al form con errores
+            return "register";
         }
         try {
             readerService.register(reader);
@@ -71,6 +71,11 @@ public class ReaderController {
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();
+        return "redirect:/login";
+    }
+
+    @GetMapping("/")
+    public String redirect() {
         return "redirect:/login";
     }
 
