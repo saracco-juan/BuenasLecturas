@@ -28,7 +28,6 @@ public class Reader {
     @OneToMany(mappedBy = "reader")
     private List<ReadingList> readingList;
 
-
     public Reader() {
     }
 
@@ -75,6 +74,5 @@ public class Reader {
     public void setPassword(String password) {
         this.password = password;
     }
-
 
 }

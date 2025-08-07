@@ -6,13 +6,13 @@
 }
 
 body {
-    font-family: 'Segoe UI', sans-serif;
     background-color: #ffcc99;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
     height: 100vh;
+    padding-top: 3rem;
 }
 
 .text-container {
@@ -80,7 +80,6 @@ button {
 .hero {
     text-align: center;
     padding: 2rem 0;
-    background-color: #ffcc99;
 }
 
 .quote {
@@ -162,6 +161,17 @@ button {
     padding: 0.75rem;
     border: 1px solid #ccc;
     border-radius: 5px;
+}
+
+.book-card {
+    padding: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.book-card.selected {
+    background-color: #ffcc99;
 }
 
 .book-card p {

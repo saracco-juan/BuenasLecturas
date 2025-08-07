@@ -12,5 +12,4 @@ public interface ReviewRepository extends JpaRepository<Review, Integer> {
     boolean existsByReaderAndBook(Reader reader, Book book);
     Review findByReaderAndBook(Reader reader, Book book);
 
-
 }

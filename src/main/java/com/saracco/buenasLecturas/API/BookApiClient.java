@@ -24,6 +24,7 @@ public class BookApiClient {
 
         List<Book> books = new ArrayList<>();
         List<ApiBook> docs = response.getDocs();
+
         int limit = Math.min(5, docs.size());
 
         if (response.getDocs() != null) {
